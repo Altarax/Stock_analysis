@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Stock Analysis</title>
+
+</head>
+<body>
+
+    <form method="POST" action="{% url 'visualize-data' %}">
+        {% csrf_token %}
+
+        <select id="stocks" name="first-stock">
+        {% for stock in SBF120 %}
+            <option value={{ stock }}>{{ stock }}</option>
+        {% endfor %}
+        </select>
+
+        <select id="stocks-2" name="second-stock">
+        {% for stock in SBF120 %}
+            <option value={{ stock }}>{{ stock }}</option>
+        {% endfor %}
+        </select>
+
+        <button type="submit">Validate</button>
+    </form>
+
+</body>
+</html>

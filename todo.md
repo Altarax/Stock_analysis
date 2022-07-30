@@ -15,7 +15,7 @@
 
 ## Functionalities
 
-[] Choose 2 stocks among the list of stocks (dropdown list)
+[x] Choose 2 stocks among the list of stocks (dropdown list)
 [] Parse data on the different website and APIs
 [] Compare data
 [] Visualize it

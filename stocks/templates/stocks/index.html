@@ -25,5 +25,22 @@
         <button type="submit">Validate</button>
     </form>
 
+    {% load static %}
+    {% for stock in stocks %}
+        <h2>{{ stock.name }}</h2>
+        <img src="{% static 'images/hist_price_'|add:stock.name|add:'.png' %}" alt={{ stock.name }} height="300", width="630"/>
+    {% endfor %}
+
+    {% load static %}
+    {% for stock in stocks %}
+        <h2>{{ stock.name }}</h2>
+        <img src="{% static 'images/dividend_price_'|add:stock.name|add:'.png' %}" alt={{ stock.name }} height="300", width="680"/>
+    {% endfor %}
+
+    {% for stock in stocks %}
+        <h2>{{ stock.name }}</h2>
+        <img src="{% static 'images/dividend_price_'|add:stock.name|add:'.png' %}" alt={{ stock.name }} height="300", width="680"/>
+    {% endfor %}
+
 </body>
 </html>

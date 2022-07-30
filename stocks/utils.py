@@ -1,3 +1,4 @@
+# List of all available tickers
 SBF120 = ["ALU.PA", "AI.PA", "AIR.PA", "CS.PA", "ALO.PA", "AC.PA", "AF.PA", "ALEHT.PA", "SIPH.PA", "OSI.PA", "MT.PA",
           "CAFO.PA", "RMS.PA", "MLMAB.PA", "CDA.PA", "ATO.PA", "ATA.PA", "ALT.PA", "ALOCT.PA", "ALMDG.PA", "ALAST.PA",
           "ADP.PA", "ZC.PA", "XIL.PA", "BNP.PA", "BN.PA", "BAIN.PA", "EN.PA", "ML.PA", "DSY.PA", "DP.PA", "EDF.PA",
@@ -90,7 +91,7 @@ SBF120 = ["ALU.PA", "AI.PA", "AIR.PA", "CS.PA", "ALO.PA", "AC.PA", "AF.PA", "ALE
           "MLERI.PA", "EURS.PA", "EUCAR.PA", "GET.PA", "MLMCE.PA", "MLITG.PA", "EUR.PA", "MLEVE.PA", "GLO.PA",
           "METEX.PA",
           "EXE.PA", "EXAC.PA", "MLHYE.PA", "MLMEX.PA", "LEY.PA", "FAUV.PA", "MLFAC.PA", "MFC.PA", "MALT.PA", "FED.PA",
-          "FINM.PA", "NOKIA.PA", "14488435.PA", "ORIA.PA", "FIM.PA", "FLO.PA", "FMU.PA", "LEBL.PA", "INEA.PA",
+          "FINM.PA", "NOKIA.PA", "ORIA.PA", "FIM.PA", "FLO.PA", "FMU.PA", "LEBL.PA", "INEA.PA",
           "MLCFI.PA",
           "SPEL.PA", "LFVE.PA", "MLVIN.PA", "FPNV.PA", "THER.PA", "TFF.PA", "SOG.PA", "SOFR.PA", "SO.PA", "SCDU.PA",
           "SFT.PA", "SFBS.PA", "SDG.PA", "SCR.PA", "SAMS.PA", "SABE.PA", "RIB.PA", "RCF.PA", "PSB.PA", "MUN.PA",
@@ -105,7 +106,7 @@ SBF120 = ["ALU.PA", "AI.PA", "AIR.PA", "CS.PA", "ALO.PA", "AC.PA", "AF.PA", "ALE
           "MLSRP.PA", "MLQUD.PA", "OREGE.PA", "MLUNT.PA", "MLARI.PA", "MLAUD.PA", "MLGAL.PA", "UNBL.PA", "NRG.PA",
           "SPIE.PA", "MLCMG.PA", "MKEA.PA", "TXCL.PA", "LNA.PA", "PHA.PA", "GNFT.PA", "MLPLC.PA", "MLCOL.PA",
           "GBTNV.PA",
-          "SESNV.PA", "VLTSA.PA", "ROTH.PA", "005408.PA", "RUI.PA", "MEMS.PA", "GRVO.PA", "MLPVG.PA", "MLMII.PA",
+          "SESNV.PA", "VLTSA.PA", "ROTH.PA", "RUI.PA", "MEMS.PA", "GRVO.PA", "MLPVG.PA", "MLMII.PA",
           "MLPAC.PA", "MLCHP.PA", "KORI.PA", "TVLY.PA", "RBT.PA", "MLMUL.PA", "MLGRD.PA", "MLSBT.PA", "MLNEO.PA",
           "MRNNV.PA", "POXEL.PA", "PCA.PA", "FREDS.PA", "MLGLO.PA", "RXLNV.PA", "PREC.PA", "MLTEK.PA", "POM.PA",
           "DEVR.PA",
@@ -122,7 +123,8 @@ SBF120 = ["ALU.PA", "AI.PA", "AIR.PA", "CS.PA", "ALO.PA", "AC.PA", "AF.PA", "ALE
           "SACI.PA", "SAFOR.PA", "PARP.PA", "RUSAL.PA", "RUIDS.PA", "RLL.PA", "ROD.PA", "RUINV.PA", "VALE3.PA",
           "SDT.PA",
           "SFPI.PA", "SGONV.PA", "SRP.PA", "TAYN.PA", "TFI.PA", "TIPI.PA", "TOU.PA", "VLA.PA", "VETO.PA", "VIA.PA",
-          "WLN.PA", "RE.PA", "SPI.PA", "HOP.PA", "INFY.PA", "4848650.PA", "LIN.PA", "MAN.PA", "SANNV.PA", "SAVE.PA",
+          "WLN.PA", "RE.PA", "SPI.PA", "HOP.PA", "INFY.PA", "LIN.PA", "MAN.PA", "SANNV.PA", "SAVE.PA",
           "SEFER.PA", "SELER.PA", "SEQ.PA"]
 
 SBF120.sort()
+SBF120[0] = "AIR.PA"

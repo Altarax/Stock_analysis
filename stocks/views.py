@@ -5,7 +5,6 @@ from stocks.utils import *
 from stocks.models import *
 import os
 
-
 # Create your views here.
 def index(request):
     stocks = {"Stocks": Stock.objects.order_by("name")}
@@ -16,13 +15,16 @@ def index(request):
 def visualize_data(request):
     Stock.objects.all().delete()
     first_stock = request.POST.get('first-stock')
+    first_stock = Stock(name=first_stock, symbol=first_stock)
     second_stock = request.POST.get('second-stock')
-    Stock.objects.create(name=first_stock, symbol=first_stock)
-    Stock.objects.create(name=second_stock, symbol=second_stock)
-    Stock.objects.all()[0].get_price_hist()
-    Stock.objects.all()[1].get_price_hist()
-    Stock.objects.all()[0].get_dividend_hist()
-    Stock.objects.all()[1].get_dividend_hist()
-    Stock.objects.all()[0].get_fundamentals_data()
-    Stock.objects.all()[1].get_fundamentals_data()
+    second_stock = Stock(name=second_stock, symbol=second_stock)
+    first_stock.get_price_hist()
+    first_stock.get_dividend_hist()
+    first_stock.initialize_fundamentals_data()
+    second_stock.get_price_hist()
+    second_stock.get_dividend_hist()
+    second_stock.initialize_fundamentals_data()
+    first_stock.get_all_financials_data()
+    second_stock.get_all_financials_data()
+
     return redirect('home')

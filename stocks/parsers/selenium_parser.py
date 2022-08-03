@@ -1,11 +1,13 @@
 # Find the financials url of the company on Zonebourse
 from asyncio.windows_events import NULL
+
 from selenium import webdriver
+from selenium.common.exceptions import NoSuchElementException
+from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.chrome.options import Options
-from selenium.common.exceptions import NoSuchElementException
+
 
 def get_financials_url(company_name):
     options = webdriver.ChromeOptions()
@@ -29,7 +31,11 @@ def get_financials_url(company_name):
 
     stock_page = driver.find_element(By.XPATH, '//*[@id="advanced-search__instruments"]/div[3]/table/tbody/tr[1]/td[1]/a/span')
     stock_page.click()
-    financials_url = driver.find_element(By.XPATH, '//*[@id="zbCenter"]/div/span/table[2]/tbody/tr/td/table/tbody/tr/td[9]/nobr/a').get_attribute("href")
+    temp = driver.find_elements(By.CLASS_NAME, 'link3')
+    for i in temp:
+        if i.text == "Finances":
+            financials_url = i.get_attribute("href")
+            break
     driver.quit()
     
     return financials_url

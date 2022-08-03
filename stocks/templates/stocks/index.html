@@ -11,13 +11,13 @@
         {% csrf_token %}
 
         <select id="stocks" name="first-stock">
-        {% for stock in SBF120 %}
+        {% for stock in FRENCH_TICKERS %}
             <option value={{ stock }}>{{ stock }}</option>
         {% endfor %}
         </select>
 
         <select id="stocks-2" name="second-stock">
-        {% for stock in SBF120 %}
+        {% for stock in FRENCH_TICKERS %}
             <option value={{ stock }}>{{ stock }}</option>
         {% endfor %}
         </select>

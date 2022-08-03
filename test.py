@@ -1,9 +1,10 @@
-from asyncio.windows_events import NULL
+from time import sleep
+from bs4 import BeautifulSoup as bs
+import requests
 import yfinance as yf
-import matplotlib.pyplot as plt
+from datetime import datetime
 
-amundi = yf.Ticker("UBI.PA")
-if (amundi.dividends.empty):
-    plt.figure()
-    plt.plot(NULL)
-    plt.savefig(f'stocks/static/images/dividend_price_{"ubisoft"}.png')
+from stocks.utils import FRENCH_TICKERS
+
+action = yf.Ticker("AC.PA")
+print(action.info)

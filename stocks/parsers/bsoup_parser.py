@@ -1,12 +1,7 @@
 # Find the financials data of the company on Zonebourse with beautiful soup
-from asyncio.windows_events import NULL
-from decimal import Decimal
-from unicodedata import decimal
-
 import matplotlib.pyplot as plt
 import requests
 from bs4 import BeautifulSoup as bs
-from matplotlib import dates
 from numpy import mean
 
 # Colors list for lines in plot
@@ -21,6 +16,7 @@ company_name_global = ""
 yield_values_global = []
 per_values_global = []
 bna_values_global = []
+bvps_values_global = []
 last_table = []
 second_table = []
 
@@ -37,6 +33,18 @@ def create_graph(x, values_list, value_name):
     plt.xlabel('Date')
     plt.ylabel(f'{value_name.capitalize()}')
     plt.savefig(f'stocks/static/images/{value_name}_values_{company_name_global}.png', bbox_inches='tight')
+
+def parser_get_financials_url(isin):
+    stock_page = requests.get(f"https://www.zonebourse.com/recherche/instruments?q={str(isin)}")
+    soup = bs(stock_page.content, 'html.parser')
+    stock_list = soup.find_all('td',{'class': 'table-child--left'})
+
+    t = [i.find('a') for i in stock_list]
+    for line in t:
+        temp = str(line).split('"')
+        for j in temp:
+            if "/cours" in j:
+                return "https://www.zonebourse.com"+j+"fondamentaux/"
 
 def parser_initialize(financials_url, company_name):
     global company_name_global
@@ -71,6 +79,15 @@ def parser_initialize(financials_url, company_name):
     second_table = [t.get_text() for t in temp]
     del second_table[0]
 
+def parser_get_last_table():
+    return last_table
+
+def parser_get_second_table():
+    return second_table
+
+def parser_get_years():
+    return years
+
 def parser_get_bna():
     global bna_values_global
     bna_values = []
@@ -84,12 +101,12 @@ def parser_get_bna():
                     bna_values.append(round(float(bna.get_text().replace(' ', '').replace(',', '.')), 2))
     bna_values = bna_values[0:len(second_table)]
     bna_values_global = bna_values
-    create_graph(second_table, bna_values, "bna")
+    #create_graph(second_table, bna_values, "bna")
     return bna_values
 
 def parser_get_per():
-    per_values = []
     global bna_values_global
+    per_values = []
     for i in table:
         if i.get_text() == "PER":
             pers = i.find_next_siblings("td")
@@ -105,7 +122,7 @@ def parser_get_per():
     per_values = calculated_per
     global per_values_global
     per_values_global = per_values
-    create_graph(years, per_values, "per")
+    #create_graph(years, per_values, "per")
     return per_values
 
 def parser_get_roe():
@@ -119,7 +136,7 @@ def parser_get_roe():
                 else:
                     roe_values.append(float(roe.get_text().replace(' ', '').replace('%', '').replace(',', '.')))
     roe_values = roe_values[0:len(last_table)]
-    create_graph(last_table, roe_values, "roe")
+    #create_graph(last_table, roe_values, "roe")
     return roe_values
 
 def parser_get_roa():
@@ -133,13 +150,14 @@ def parser_get_roa():
                 else:
                     roa_values.append(float(roa.get_text().replace(' ', '').replace('%', '').replace(',', '.')))
     roa_values = roa_values[0:len(last_table)]
-    create_graph(last_table, roa_values, "roa")
+    #create_graph(last_table, roa_values, "roa")
     return roa_values
 
 def parser_get_bvps():
+    global bvps_values_global
     bvps_values = []
     for i in table:
-        if i.get_text() == "BVPS (Actif net par Action)2":
+        if "BVPS" in i.get_text():
             bvpss = i.find_next_siblings("td")
             for bvps in bvpss:
                 if bvps.get_text() == '-':
@@ -147,7 +165,8 @@ def parser_get_bvps():
                 else:
                     bvps_values.append(float(bvps.get_text().replace(' ', '').replace(',', '.')))
     bvps_values = bvps_values[0:len(last_table)]
-    create_graph(last_table, bvps_values, "bvps")
+    bvps_values_global = bvps_values
+    #create_graph(last_table, bvps_values, "bvps")
     return bvps_values
 
 def parser_get_yield():
@@ -163,7 +182,7 @@ def parser_get_yield():
     yield_values = yield_values[0:len(years)]
     global yield_values_global
     yield_values_global = yield_values
-    create_graph(years, yield_values, "yield")
+    #create_graph(years, yield_values, "yield")
     return yield_values
 
 def parser_get_capex():
@@ -177,7 +196,7 @@ def parser_get_capex():
                 else:
                     capex_values.append(float(capex.get_text().replace(' ', '').replace(',', '.')))
     capex_values = capex_values[0:len(last_table)]
-    create_graph(last_table, capex_values, "capex")
+    #create_graph(last_table, capex_values, "capex")
     return capex_values
 
 def parser_get_turnover():
@@ -191,7 +210,7 @@ def parser_get_turnover():
                 else:
                     turnover_values.append(float(turnover.get_text().replace(' ', '').replace(',', '.')))
     turnover_values = turnover_values[0:len(years)]
-    create_graph(years, turnover_values, "turnover")
+    #create_graph(years, turnover_values, "turnover")
     return turnover_values
 
 def parser_get_net_margin():
@@ -205,7 +224,7 @@ def parser_get_net_margin():
                 else:
                     net_margin_values.append(float(net_margin.get_text().replace(' ', '').replace('%', '').replace(',', '.')))
     net_margin_values = net_margin_values[0:len(years)]
-    create_graph(years, net_margin_values, "net_margin")
+    #create_graph(years, net_margin_values, "net_margin")
     return net_margin_values
 
 def parser_get_net_result():
@@ -219,7 +238,7 @@ def parser_get_net_result():
                 else:
                     net_results_values.append(float(net_result.get_text().replace(' ', '').replace(',', '.')))
     net_results_values = net_results_values[0:len(years)]
-    create_graph(years, net_results_values, "net_result")
+    #create_graph(years, net_results_values, "net_result")
     return net_results_values
 
 def parser_get_free_cash_flow():
@@ -233,7 +252,7 @@ def parser_get_free_cash_flow():
                 else:
                     free_cash_flow_values.append(float(free_cash_flow.get_text().replace(' ', '').replace(',', '.')))
     free_cash_flow_values = free_cash_flow_values[0:len(last_table)]
-    create_graph(last_table, free_cash_flow_values, "free_cash_flow")
+    #create_graph(last_table, free_cash_flow_values, "free_cash_flow")
     return free_cash_flow_values
 
 def parser_get_operating_margin():
@@ -247,7 +266,7 @@ def parser_get_operating_margin():
                 else:
                     operating_margin_values.append(float(operating_margin.get_text().replace(' ', '').replace('%', '').replace(',', '.')))
     operating_margin_values = operating_margin_values[0:len(years)]
-    create_graph(years, operating_margin_values, "operating_margin")
+    #create_graph(years, operating_margin_values, "operating_margin")
     return operating_margin_values
 
 def parser_get_operating_result():
@@ -261,21 +280,21 @@ def parser_get_operating_result():
                 else:
                     operating_result_values.append(float(operating_result.get_text().replace(' ', '').replace('%', '').replace(',', '.')))
     operating_result_values = operating_result_values[0:len(years)]
-    create_graph(years, operating_result_values, "operating_result")
+    #create_graph(years, operating_result_values, "operating_result")
     return operating_result_values
 
 def parser_get_debt():
     debt_values = []
     for i in table:
-         if i.get_text() == "Dette Nette1" or i.get_text() == "Dette Nette":
+         if "Dette Nette" in i.get_text():
             debts = i.find_next_siblings("td")
             for debt in debts:
                 if debt.get_text() == '-':
                     debt_values.append(0)
                 else:
-                    debt_values.append(int(debt.get_text().replace(' ', '')))
+                    debt_values.append(float(debt.get_text().replace(' ', '').replace(',', '.')))
     debt_values = debt_values[0:len(last_table)]
-    create_graph(last_table, debt_values, "debt")
+    #create_graph(last_table, debt_values, "debt")
     return debt_values
 
 def parser_get_treasury():
@@ -287,9 +306,9 @@ def parser_get_treasury():
                 if treasury.get_text() == '-':
                     treasury_values.append(0)
                 else:
-                    treasury_values.append(int(treasury.get_text().replace(' ', '')))
+                    treasury_values.append(float(treasury.get_text().replace(' ', '').replace(',', '.')))
     treasury_values = treasury_values[0:len(last_table)]
-    create_graph(last_table, treasury_values, "treasury")
+    #create_graph(last_table, treasury_values, "treasury")
     return treasury_values
 
 def parser_get_equity():
@@ -301,9 +320,9 @@ def parser_get_equity():
                 if equity.get_text() == '-':
                     equity_values.append(0)
                 else:
-                    equity_values.append(int(equity.get_text().replace(' ', '')))
+                    equity_values.append(float(equity.get_text().replace(' ', '').replace(',', '.')))
     equity_values = equity_values[0:len(last_table)]
-    create_graph(last_table, equity_values, "equity")
+    #create_graph(last_table, equity_values, "equity")
     return equity_values
 
 def parser_get_cap():
@@ -315,9 +334,9 @@ def parser_get_cap():
                 if cap.get_text() == '-':
                     cap_values.append(0)
                 else:
-                    cap_values.append(int(cap.get_text().replace(' ', '')))
+                    cap_values.append(float(cap.get_text().replace(' ', '').replace(',', '.')))
     cap_values = cap_values[0:len(years)]
-    create_graph(years, cap_values, "capitalization")
+    #create_graph(years, cap_values, "capitalization")
     return cap_values
 
 def parser_get_leverage():
@@ -331,13 +350,35 @@ def parser_get_leverage():
                 else:
                     leverage_values.append(float(leverage.get_text().replace(' ', '').replace('x', '').replace(',', '.')))
     leverage_values = leverage_values[0:len(last_table)]
-    create_graph(last_table, leverage_values, "leverage")
+    #create_graph(last_table, leverage_values, "leverage")
     return leverage_values
 
 def parser_get_floating_stock():
-    value = soup_global.find("td", text="Flottant").find_next_sibling("td").text
-    value = float(value.replace(' ', '').replace('%', '').replace(',', '.'))
+    try:
+        value = soup_global.find("td", text="Flottant").find_next_sibling("td").text
+        value = float(value.replace(' ', '').replace('%', '').replace(',', '.'))
+    except:
+        value = 0
     return value
+
+def parser_get_pbr():
+    global bvps_values_global
+    stock_values = []
+    bpr_values = []
+    for i in table:
+       if "Cours de référence" in i.get_text():
+            values = i.find_next_siblings("td")
+            for s in values:
+                if s.get_text() == '-':
+                    stock_values.append(0)
+                else:
+                    stock_values.append(float(s.get_text().replace(' ', '').replace(',', '.')))
+    stock_values = stock_values[0:len(years)]
+    try:
+        bpr_values = [i/j for i, j in zip(stock_values, bvps_values_global)]
+    except:
+        bpr_values = 0
+    return bpr_values
 
 def calculate_own_indicators():
     my_own_indicators = {}
@@ -359,8 +400,5 @@ def calculate_own_indicators():
         my_own_indicators["PER Evaluation"] = "Underestimated"
     else:
         my_own_indicators["PER Evaluation"] = "Overestimated"
-        
-    print(my_own_indicators["Yield Evaluation"], my_own_indicators["Yield Evolution"])
-    print(my_own_indicators["PER Evaluation"], my_own_indicators["PER Evolution"])
 
     return my_own_indicators

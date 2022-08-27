@@ -11,7 +11,6 @@
     [x] Share price   
     [x] Fundamentals data:  
         [x] Net profit  
-        [x] Earnings per share  
         [x] Free Cash Flow  
         [x] Operating result  
         [x] Operating maring  
@@ -31,13 +30,13 @@
         [x] Floating stock  
         [] Dividend distribution rate  
 [x] All of the above data HAVE to be saved in the database  
-[] Compare data from the database  
-[] Visualize the data  
+[x] Compare data from the database  
+[x] Visualize the data  
 [] Add my own indicators  :  
     [x] Yield Evaluation  
     [x] PER Evaluation  
-    [] PBR = Stock price/BVPS  
-    [] Compare ROE of the company with the mean ROA of the company sector  
+    [x] PBR = Stock price/BVPS  
+    [] Compare ROE of the company with the mean ROE of the company sector  
     [] List the recommendations by sector and compare it for :  
         [] Operating maring  
         [] Dividend distribution rate  

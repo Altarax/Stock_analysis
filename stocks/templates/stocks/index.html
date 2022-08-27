@@ -7,40 +7,31 @@
 </head>
 <body>
 
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/index.css' %}">
+
+    <div class="one">
+        <h1>Choose the two companies:</h1>
+    </div>
+
     <form method="POST" action="{% url 'visualize-data' %}">
         {% csrf_token %}
 
-        <select id="stocks" name="first-stock">
-        {% for stock in FRENCH_TICKERS %}
-            <option value={{ stock }}>{{ stock }}</option>
+        <select class="minimal" id="stocks" name="first-stock">
+        {% for stock in STOCK_LIST %}
+            <option value="{{ stock }}">{{ stock }}</option>
         {% endfor %}
         </select>
 
-        <select id="stocks-2" name="second-stock">
-        {% for stock in FRENCH_TICKERS %}
-            <option value={{ stock }}>{{ stock }}</option>
+        <select class="minimal" id="stocks-2" name="second-stock">
+        {% for stock in STOCK_LIST %}
+            <option value="{{ stock }}">{{ stock }}</option>
         {% endfor %}
         </select>
 
-        <button type="submit">Validate</button>
+        <br><br>
+        <button class="bn29" type="submit">Validate</button>
     </form>
-
-    {% load static %}
-    {% for stock in stocks %}
-        <h2>{{ stock.name }}</h2>
-        <img src="{% static 'images/hist_price_'|add:stock.name|add:'.png' %}" alt={{ stock.name }} height="300", width="630"/>
-    {% endfor %}
-
-    {% load static %}
-    {% for stock in stocks %}
-        <h2>{{ stock.name }}</h2>
-        <img src="{% static 'images/dividend_price_'|add:stock.name|add:'.png' %}" alt={{ stock.name }} height="300", width="680"/>
-    {% endfor %}
-
-    {% for stock in stocks %}
-        <h2>{{ stock.name }}</h2>
-        <img src="{% static 'images/dividend_price_'|add:stock.name|add:'.png' %}" alt={{ stock.name }} height="300", width="680"/>
-    {% endfor %}
 
 </body>
 </html>

@@ -1,17 +1,12 @@
 from datetime import date
 import json
-import random
-from django.contrib.postgres.fields import DecimalRangeField
 from django.db import models
-from django.forms import IntegerField
 import yfinance as yf
 import matplotlib.pyplot as plt
-from stocks.parsers.selenium_parser import *
 from stocks.parsers.bsoup_parser import *
-from django.contrib.postgres.fields import ArrayField
 import json
-from PIL import Image
 from stocks.utils import *
+from datetime import date
 
 # Choosing my plt style
 plt.style.use('classic')
@@ -21,23 +16,25 @@ colors_list = ["r", "b", "g", "k", "m", "y", "c"]
 
 # Create your models here.
 class Stock(models.Model):
-    name = models.CharField(max_length=60)
-    symbol = models.CharField(max_length=10)
     slug = models.SlugField()
+    name = models.CharField(max_length=60)
+    isin = models.CharField(max_length=60)
+    symbol = models.CharField(max_length=10)
     financial_url = models.CharField(max_length=60)
     date_dividend = models.TextField(null=True)
     date_hist = models.TextField(null=True)
-    stock_hist = models.TextField(null=True)
-    dividend_hist = models.TextField(null=True)
+    pbr_values = models.TextField(null=True)
     per_values = models.TextField(null=True)
     roa_values = models.TextField(null=True)
     roe_values = models.TextField(null=True)
     bna_values = models.TextField(null=True)
     bvps_values = models.TextField(null=True)
     debt_values = models.TextField(null=True)
+    stock_values = models.TextField(null=True)
     capex_values = models.TextField(null=True)
     yield_values = models.TextField(null=True)
     equity_values = models.TextField(null=True)
+    dividend_values = models.TextField(null=True)
     leverage_values = models.TextField(null=True)
     treasury_values = models.TextField(null=True)
     turnover_values = models.TextField(null=True)
@@ -47,6 +44,9 @@ class Stock(models.Model):
     capitalization_values = models.TextField(null=True)
     operating_margin_values = models.TextField(null=True)
     operating_result_values = models.TextField(null=True)  
+    last_table_date = models.TextField(null=True)  
+    second_table_date = models.TextField(null=True)  
+    years_date = models.TextField(null=True)  
     sector = models.TextField(null=True)
     floating_stock = models.IntegerField(null=True)
     dividend_distribution_rate = models.IntegerField(null=True)
@@ -54,6 +54,12 @@ class Stock(models.Model):
     def get_current_price(self):
         action = yf.Ticker(str(self.symbol))
         return action.info
+
+    def get_dates(self):
+        self.last_table_date = parser_get_last_table()
+        self.second_table_date = parser_get_second_table()
+        self.years_date = parser_get_years()
+        super().save()
 
     def get_sector(self):
         action = yf.Ticker(str(self.symbol))
@@ -65,14 +71,13 @@ class Stock(models.Model):
         self.sector = temp
         super().save()
         
-
     def get_price_hist(self):
         action = yf.Ticker(str(self.symbol))
         hist = action.history(period="max")
 
         if (hist.empty):
             self.date_hist = '0'
-            self.stock_hist = '0'
+            self.stock_values = '0'
             super().save()
             """
             # Create empty plot
@@ -81,10 +86,18 @@ class Stock(models.Model):
             plt.savefig(f'stocks/static/images/hist_price_{self.name}.png')
             """
         else:
+            current_year = date.today().year
             hist.index = hist.index.date
-            hist_data = [i.strftime("%m/%d/%Y") for i in hist.index.tolist()]
-            self.date_hist = json.dumps(hist_data)
-            self.stock_hist = json.dumps(hist["Open"].tolist())
+            hist_date = [i.strftime("%m/%d/%Y") for i in hist.index.tolist()]
+            try:
+                val = hist_date.index(f"01/02/{current_year-10}") or hist_date.index("01/02/2012")
+            except:
+                val = 0
+
+            self.date_hist = json.dumps(hist_date[val:-1])
+            temp = hist["Open"].tolist()[val:-1]
+            temp_formated = ['%.2f' % elem for elem in temp]
+            self.stock_values = json.dumps(temp_formated)
             super().save()
             """
             # Save hist price
@@ -105,7 +118,7 @@ class Stock(models.Model):
 
         if (len(action_list) == 0):
             self.date_dividend = '0'
-            self.dividend_hist = '0'
+            self.dividend_values = '0'
             super().save()
             """
             # Create empty plot
@@ -116,7 +129,7 @@ class Stock(models.Model):
         else:
             div_data = [i.strftime("%m/%d/%Y") for i in action.dividends.index.tolist()]
             self.date_dividend = json.dumps(div_data)
-            self.dividend_hist = json.dumps(action.dividends.tolist())
+            self.dividend_values = json.dumps(action.dividends.tolist())
             super().save()
             """
             # Save dividend price
@@ -129,16 +142,10 @@ class Stock(models.Model):
             plt.ylabel(f'Prix de {self.name}')
             plt.savefig(f'stocks/static/images/dividend_price_{self.name}.png')
             """
-
+        
     def initialize_fundamentals_data(self):
-        action = yf.Ticker(str(self.symbol))
-        name = ""
-        try:
-            name += action.info["longName"]
-        except:
-            name += action.info["shortName"]
-        self.financial_url = get_financials_url(name.replace(' SA', ''))
-        parser_initialize(self.financial_url, name.replace(' SA', ''))
+        self.financial_url = parser_get_financials_url(self.isin)
+        parser_initialize(self.financial_url, self.name)
         super().save()
 
     def get_bna(self):
@@ -162,7 +169,7 @@ class Stock(models.Model):
         super().save()
 
     def get_roa(self):
-        temp = parser_get_roe()
+        temp = parser_get_roa()
         self.roa_values= json.dumps(temp)
         super().save()
 
@@ -228,7 +235,7 @@ class Stock(models.Model):
 
     def get_leverage(self):
         temp = parser_get_leverage()
-        self.capitalization_values = json.dumps(temp)
+        self.leverage_values = json.dumps(temp)
         super().save()
 
     def get_floating_stock(self):
@@ -236,18 +243,21 @@ class Stock(models.Model):
         self.floating_stock = temp
         super().save()
 
-    def get_floating_stock(self):
-        temp = parser_get_floating_stock()
-        self.floating_stock = temp
+    def get_pbr(self):
+        temp = parser_get_pbr()
+        self.pbr_values = temp
         super().save()
 
     def get_all_financials_data(self):
+        self.get_dates()
+        self.get_sector()
+        self.get_price_hist()
+        self.get_dividend_hist()
         self.get_bna()
         self.get_per()
         self.get_roe()
         self.get_roa()
         self.get_free_cash_flow()
-        self.get_capex()
         self.get_bvps()
         self.get_turnover()
         self.get_yield()
@@ -255,8 +265,15 @@ class Stock(models.Model):
         self.get_net_result()
         self.get_operating_margin()
         self.get_operating_result()
+        self.get_capex()
+        self.get_debt()
+        self.get_treasury()
+        self.get_equity()
+        self.get_cap()
+        self.get_leverage()
+        self.get_floating_stock()
+        self.get_pbr()
 
-    def decode(self):
-        pass
-        #jsonDec = json.decoder.JSONDecoder()
-        #myPythonList = jsonDec.decode(myModel.myList)
+    def decode_stock_values(self):
+        jsonDec = json.decoder.JSONDecoder()
+        return jsonDec.decode(self.stock_values)

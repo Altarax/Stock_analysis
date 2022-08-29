@@ -9,7 +9,7 @@ from stocks.utils import *
 from datetime import date
 
 # Choosing my plt style
-plt.style.use('classic')
+plt.style.use("classic")
 
 # Colors list for lines in plot
 colors_list = ["r", "b", "g", "k", "m", "y", "c"]
@@ -43,10 +43,10 @@ class Stock(models.Model):
     free_cash_flow_values = models.TextField(null=True)
     capitalization_values = models.TextField(null=True)
     operating_margin_values = models.TextField(null=True)
-    operating_result_values = models.TextField(null=True)  
-    last_table_date = models.TextField(null=True)  
-    second_table_date = models.TextField(null=True)  
-    years_date = models.TextField(null=True)  
+    operating_result_values = models.TextField(null=True)
+    last_table_date = models.TextField(null=True)
+    second_table_date = models.TextField(null=True)
+    years_date = models.TextField(null=True)
     sector = models.TextField(null=True)
     floating_stock = models.IntegerField(null=True)
     dividend_distribution_rate = models.IntegerField(null=True)
@@ -70,14 +70,14 @@ class Stock(models.Model):
             temp += "Unknown"
         self.sector = temp
         super().save()
-        
+
     def get_price_hist(self):
         action = yf.Ticker(str(self.symbol))
         hist = action.history(period="max")
 
-        if (hist.empty):
-            self.date_hist = '0'
-            self.stock_values = '0'
+        if hist.empty:
+            self.date_hist = "0"
+            self.stock_values = "0"
             super().save()
             """
             # Create empty plot
@@ -90,13 +90,15 @@ class Stock(models.Model):
             hist.index = hist.index.date
             hist_date = [i.strftime("%m/%d/%Y") for i in hist.index.tolist()]
             try:
-                val = hist_date.index(f"01/02/{current_year-10}") or hist_date.index("01/02/2012")
+                val = hist_date.index(f"01/02/{current_year-10}") or hist_date.index(
+                    "01/02/2012"
+                )
             except:
                 val = 0
 
             self.date_hist = json.dumps(hist_date[val:-1])
             temp = hist["Open"].tolist()[val:-1]
-            temp_formated = ['%.2f' % elem for elem in temp]
+            temp_formated = ["%.2f" % elem for elem in temp]
             self.stock_values = json.dumps(temp_formated)
             super().save()
             """
@@ -116,9 +118,9 @@ class Stock(models.Model):
         action = yf.Ticker(str(self.symbol))
         action_list = action.dividends
 
-        if (len(action_list) == 0):
-            self.date_dividend = '0'
-            self.dividend_values = '0'
+        if len(action_list) == 0:
+            self.date_dividend = "0"
+            self.dividend_values = "0"
             super().save()
             """
             # Create empty plot
@@ -142,7 +144,7 @@ class Stock(models.Model):
             plt.ylabel(f'Prix de {self.name}')
             plt.savefig(f'stocks/static/images/dividend_price_{self.name}.png')
             """
-        
+
     def initialize_fundamentals_data(self):
         self.financial_url = parser_get_financials_url(self.isin)
         parser_initialize(self.financial_url, self.name)
@@ -170,7 +172,7 @@ class Stock(models.Model):
 
     def get_roa(self):
         temp = parser_get_roa()
-        self.roa_values= json.dumps(temp)
+        self.roa_values = json.dumps(temp)
         super().save()
 
     def get_yield(self):

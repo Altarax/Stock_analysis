@@ -36,7 +36,7 @@
     [x] Yield Evaluation  
     [x] PER Evaluation  
     [x] PBR = Stock price/BVPS  
-    [] Compare ROE of the company with the mean ROE of the company sector  
+    [x] Compare ROE of the company with the mean ROE of the company sector  
     [] List the recommendations by sector and compare it for :  
         [] Operating maring  
         [] Dividend distribution rate  

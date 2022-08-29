@@ -1,81 +1,232 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="UTF-8">
-		<title>Stock Analysis</title>
 
-		{% load static %}
-		<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
-	</head>
-	<body>
+<head>
+	<meta charset="UTF-8">
+	<title>Stock Analysis</title>
 
-		<header>
-			<div class="navbar">
-				{% load static %}
-				<img class="logo" src="{% static 'images/logo.png' %}" />
-				{% block nav-home %}<a href="{% url 'home' %}">Home</a>{% endblock %}
-				{% block nav-news %}<a href="{% url 'last-news' %}">Last news</a>{% endblock %}		
+	{% load static %}
+	<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+</head>
+
+<body>
+
+	<header>
+		<div class="navbar">
+			{% load static %}
+			<img class="logo" src="{% static 'images/logo.png' %}" />
+			{% block nav-home %}<a href="{% url 'home' %}">Home</a>{% endblock %}
+			{% block nav-news %}<a href="{% url 'last-news' %}">Last news</a>{% endblock %}
+		</div>
+	</header>
+	<main>
+		<div class="background">
+			<div class="circle"></div>
+		</div>
+		<div class="title">
+			<h1>Stock analysis</h1>
+			<h2>Strategy : dividend long term</h2>
+		</div>
+		<div class="definitions">
+			<div>
+				<div>1</div><span>Brief explanations</span>
 			</div>
-		</header>
-		<main>
-			<div class="background">
-				<div class="circle"></div>
+			<div>
+				<div>2</div><span>Dividend & Stock</span>
 			</div>
-			<div class="title">
-				<h1>Stock analysis</h1>
-				<h2>Strategy : dividend long term</h2>
+			<div>
+				<div>3</div><span>Fundamentals indicators</span>
 			</div>
-			<div class="container">
-				<div>
-					<div class="dot"></div>
-					<div class="content">
-						<div class="basic_information">
-							<div class="share_name">
-								<label>Share: {{ fs_name }} </label>
-							</div>
-							<div class="share_sector">
-								<label>Sector : {{ fs_sector }} </label>
-							</div>
-							<div class="mean_sector">
-								<label class="per_mean">The mean PER of its sector is :</label>
-								<canvas id="fs_per_mean" class="fs_per_mean"></canvas>
-							</div>
+			<div>
+				<div>4</div><span>Fundamentals indicators</span>
+			</div>
+			<div>
+				<div>5</div><span>Compared data to sector</span>
+			</div>
+		</div>
+		<div class="container">
+			<div>
+				<div class="dot"></div>
+				<div class="content">
+					<div class="basic_information">
+						<div class="share_name">
+							Share: {{ fs_name }}
 						</div>
-                    </div>
+						<div class="share_sector">
+							Sector: {{ fs_sector }}
+						</div>
+					</div>
 				</div>
-				<div>
-					<div class="dot"></div>
-					<div class="content">
-                        <div class="canvas">	
-							<div class="information_1">
-							</div>
-                            <canvas id="fs_share_price" class="fs_hist_price_chart"></canvas>
-							<label>Dividend price of : {{ fs_name }} </label>
-							<canvas id="fs_dividend_price" class="fs_dividend_price_chart"></canvas>
-                        </div>
-                    </div>
+			</div>
+			<div>
+				<div class="dot"></div>
+				<div class="content">
+					<div class="canvas">
+						<div class="information_1">
+						</div>
+						<canvas id="fs_share_price" class="fs_hist_price_chart"></canvas>
+						<canvas id="fs_dividend_price" class="fs_dividend_price_chart"></canvas>
+					</div>
 				</div>
-				<div>
-					<div class="dot"></div>
-					<div class="content">
-						<div class="information_2">
-							<div class="fs_net_profit">
-                            	<canvas id="fs_net_profit" class="fs_net_profit"></canvas>
-							</div>
-							<div class="fs_free_cash_flow">
-								<canvas id="fs_free_cash_flow" class="fs_free_cash_flow"></canvas>
-							</div>
-							<div class="fs_net_margin">
-								<canvas id="fs_net_margin" class="fs_net_margin"></canvas>
-							</div>
-							<div class="fs_yield">
-								<canvas id="fs_yield" class="fs_yield"></canvas>
-							</div>
-							<div class="fs_operating_margin">
-								<canvas id="fs_operating_margin" class="fs_operating_margin"></canvas>
-							</div>
-							<div class="fs_operating_result">
-								<canvas id="fs_operating_result" class="fs_operating_result"></canvas>
+			</div>
+			<div>
+				<div class="dot"></div>
+				<div class="content">
+					<div class="information_2">
+						<div class="fs_net_profit">
+							<canvas id="fs_net_profit" class="fs_net_profit"></canvas>
+						</div>
+						<div class="fs_free_cash_flow">
+							<canvas id="fs_free_cash_flow" class="fs_free_cash_flow"></canvas>
+						</div>
+						<div class="fs_net_margin">
+							<canvas id="fs_net_margin" class="fs_net_margin"></canvas>
+						</div>
+						<div class="fs_yield">
+							<canvas id="fs_yield" class="fs_yield"></canvas>
+						</div>
+						<div class="fs_operating_margin">
+							<canvas id="fs_operating_margin" class="fs_operating_margin"></canvas>
+						</div>
+						<div class="fs_operating_result">
+							<canvas id="fs_operating_result" class="fs_operating_result"></canvas>
+						</div>
+						<div class="fs_leverage">
+							<canvas id="fs_leverage" class="fs_leverage"></canvas>
+						</div>
+						<div class="fs_treasury">
+							<canvas id="fs_treasury" class="fs_treasury"></canvas>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div>
+				<div class="dot"></div>
+				<div class="content">
+					<div class="basic_information">
+						<div class="share_name">
+							Share: {{ ss_name }}
+						</div>
+						<div class="actual_stock_price">
+							Sector: {{ fs_sector }}
+						</div>
+					</div>
+				</div>
+			</div>
+			<div>
+				<div class="dot"></div>
+				<div class="content">
+					<div class="canvas">
+						<div class="information_1">
+						</div>
+						<canvas id="ss_share_price" class="ss_hist_price_chart"></canvas>
+						<canvas id="ss_dividend_price" class="ss_dividend_price_chart"></canvas>
+					</div>
+				</div>
+			</div>
+			<div>
+				<div class="dot"></div>
+				<div class="content">
+					<div class="information_2">
+						<div class="ss_net_profit">
+							<canvas id="ss_net_profit" class="ss_net_profit"></canvas>
+						</div>
+						<div class="ss_free_cash_flow">
+							<canvas id="ss_free_cash_flow" class="ss_free_cash_flow"></canvas>
+						</div>
+						<div class="ss_net_margin">
+							<canvas id="ss_net_margin" class="ss_net_margin"></canvas>
+						</div>
+						<div class="ss_yield">
+							<canvas id="ss_yield" class="ss_yield"></canvas>
+						</div>
+						<div class="ss_operating_margin">
+							<canvas id="ss_operating_margin" class="ss_operating_margin"></canvas>
+						</div>
+						<div class="ss_operating_result">
+							<canvas id="ss_operating_result" class="ss_operating_result"></canvas>
+						</div>
+						<div class="ss_leverage">
+							<canvas id="ss_leverage" class="ss_leverage"></canvas>
+						</div>
+						<div class="ss_treasury">
+							<canvas id="ss_treasury" class="ss_treasury"></canvas>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div>
+				<div class="dot"></div>
+				<div class="content">
+					<div class="information_3">
+						<div class="fs_pbr">
+							<canvas id="fs_pbr" class="fs_pbr"></canvas>
+						</div>
+						<div class="fs_bna">
+							<canvas id="fs_bna" class="fs_bna"></canvas>
+						</div>
+						<div class="fs_bvps">
+							<canvas id="fs_bvps" class="fs_bvps"></canvas>
+						</div>
+						<div class="fs_capex">
+							<canvas id="fs_capex" class="fs_capex"></canvas>
+						</div>
+						<div class="fs_turnover">
+							<canvas id="fs_turnover" class="fs_turnover"></canvas>
+						</div>
+						<div class="fs_cap">
+							<canvas id="fs_cap" class="fs_cap"></canvas>
+						</div>
+						<div class="fs_debt">
+							<canvas id="fs_debt" class="fs_debt"></canvas>
+						</div>
+						<div class="fs_equity">
+							<canvas id="fs_equity" class="fs_equity"></canvas>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div>
+				<div class="dot"></div>
+				<div class="content">
+					<div class="information_3">
+						<div class="ss_pbr">
+							<canvas id="ss_pbr" class="ss_pbr"></canvas>
+						</div>
+						<div class="ss_bna">
+							<canvas id="ss_bna" class="ss_bna"></canvas>
+						</div>
+						<div class="ss_bvps">
+							<canvas id="ss_bvps" class="ss_bvps"></canvas>
+						</div>
+						<div class="ss_capex">
+							<canvas id="ss_capex" class="ss_capex"></canvas>
+						</div>
+						<div class="ss_turnover">
+							<canvas id="ss_turnover" class="ss_turnover"></canvas>
+						</div>
+						<div class="ss_cap">
+							<canvas id="ss_cap" class="ss_cap"></canvas>
+						</div>
+						<div class="ss_debt">
+							<canvas id="ss_debt" class="ss_debt"></canvas>
+						</div>
+						<div class="ss_equity">
+							<canvas id="ss_equity" class="ss_equity"></canvas>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div>
+				<div class="dot"></div>
+				<div class="content">
+					<div class="information_4">
+						<div class="data">
+							<label>Data to compare:</label>
+							<br>
+							<br>
+							<div class="fs_per">
+								<canvas id="fs_per" class="fs_per"></canvas>
 							</div>
 							<div class="fs_roe">
 								<canvas id="fs_roe" class="fs_roe"></canvas>
@@ -84,53 +235,39 @@
 								<canvas id="fs_roa" class="fs_roa"></canvas>
 							</div>
 						</div>
-					</div>
-				</div>
-				<div>
-					<div class="dot"></div>
-					<div class="content">
-
-					</div>
-				</div>
-				<div>
-					<div class="dot"></div>
-					<div class="content">
-						<div class="canvas">	
-							<div class="information_1">
-								<div class="share_name">
-									<label>Share price of : {{ ss_name }} </label>
-								</div>
-								<div class="actual_stock_price">
-									<label>Actual : {{ ss_actual_price }} </label>
+						<div class="sector_data">
+							<label>Data of sector:</label>
+							<br>
+							<br>
+							<div class="fs_per">
+								<div class="mean_sector">
+									<canvas id="fs_per_mean" class="fs_per_mean"></canvas>
 								</div>
 							</div>
-							<canvas id="ss_share_price" class="ss_hist_price_chart"></canvas>
-							<label>Dividend price of : {{ ss_name }} </label>
-							<canvas id="ss_dividend_price" class="ss_dividend_price_chart"></canvas>
+							<div class="fs_roe">
+								<div class="mean_sector">
+									<canvas id="fs_roe_mean" class="fs_roe_mean"></canvas>
+								</div>
+							</div>
+							<div class="fs_roa">
+								<div class="mean_sector">
+									<canvas id="fs_roa_mean" class="fs_roa_mean"></canvas>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
-				<div>
-					<div class="dot"></div>
-					<div class="content">
-						<div class="information_2">
-							<div class="ss_net_profit">
-								<canvas id="ss_net_profit" class="ss_net_profit"></canvas>
-							</div>
-							<div class="ss_free_cash_flow">
-								<canvas id="ss_free_cash_flow" class="ss_free_cash_flow"></canvas>
-							</div>
-							<div class="ss_net_margin">
-								<canvas id="ss_net_margin" class="ss_net_margin"></canvas>
-							</div>
-							<div class="ss_yield">
-								<canvas id="ss_yield" class="ss_yield"></canvas>
-							</div>
-							<div class="ss_operating_margin">
-								<canvas id="ss_operating_margin" class="ss_operating_margin"></canvas>
-							</div>
-							<div class="ss_operating_result">
-								<canvas id="ss_operating_result" class="ss_operating_result"></canvas>
+			</div>
+			<div>
+				<div class="dot"></div>
+				<div class="content">
+					<div class="information_4">
+						<div class="data">
+							<label>Data to compare:</label>
+							<br>
+							<br>
+							<div class="ss_per">
+								<canvas id="ss_per" class="ss_per"></canvas>
 							</div>
 							<div class="ss_roe">
 								<canvas id="ss_roe" class="ss_roe"></canvas>
@@ -139,127 +276,91 @@
 								<canvas id="ss_roa" class="ss_roa"></canvas>
 							</div>
 						</div>
-					</div>
-				</div>
-				<div>
-					<div class="dot"></div>
-					<div class="content">
-						<div class="information_3">
-							<div class="fs_per">
-								<canvas id="fs_per" class="fs_per"></canvas>
-							</div>
-							<div class="fs_bna">
-								<canvas id="fs_bna" class="fs_bna"></canvas>
-							</div>
-							<div class="fs_bvps">
-								<canvas id="fs_bvps" class="fs_bvps"></canvas>
-							</div>
-							<div class="fs_capex">
-								<canvas id="fs_capex" class="fs_capex"></canvas>
-							</div>
-							<div class="fs_turnover">
-								<canvas id="fs_turnover" class="fs_turnover"></canvas>
-							</div>
-							<div class="fs_cap">
-								<canvas id="fs_cap" class="fs_cap"></canvas>
-							</div>
-							<div class="fs_debt">
-								<canvas id="fs_debt" class="fs_debt"></canvas>
-							</div>
-							<div class="fs_equity">
-								<canvas id="fs_equity" class="fs_equity"></canvas>
-							</div>
-						</div>
-                    </div>
-				</div>
-				<div>
-					<div class="dot"></div>
-					<div class="content">
-						<div class="information_3">
+						<div class="sector_data">
+							<label>Data of sector:</label>
+							<br>
+							<br>
 							<div class="ss_per">
-								<canvas id="ss_per" class="ss_per"></canvas>
+								<div class="mean_sector">
+									<canvas id="ss_per_mean" class="ss_per_mean"></canvas>
+								</div>
 							</div>
-							<div class="ss_bna">
-								<canvas id="ss_bna" class="ss_bna"></canvas>
+							<div class="ss_roe">
+								<div class="mean_sector">
+									<canvas id="ss_roe_mean" class="ss_roe_mean"></canvas>
+								</div>
 							</div>
-							<div class="ss_bvps">
-								<canvas id="ss_bvps" class="ss_bvps"></canvas>
-							</div>
-							<div class="ss_capex">
-								<canvas id="ss_capex" class="ss_capex"></canvas>
-							</div>
-							<div class="ss_turnover">
-								<canvas id="ss_turnover" class="ss_turnover"></canvas>
-							</div>
-							<div class="ss_cap">
-								<canvas id="ss_cap" class="ss_cap"></canvas>
-							</div>
-							<div class="ss_debt">
-								<canvas id="ss_debt" class="ss_debt"></canvas>
-							</div>
-							<div class="ss_equity">
-								<canvas id="ss_equity" class="ss_equity"></canvas>
+							<div class="ss_roa">
+								<div class="mean_sector">
+									<canvas id="ss_roa_mean" class="ss_roa_mean"></canvas>
+								</div>
 							</div>
 						</div>
-                    </div>
-				</div>
-				<div>
-					<div class="dot"></div>
-					<div class="content">
-					</div>
-				</div>
-				<div>
-					<div class="dot"></div>
-					<div class="content">
 					</div>
 				</div>
 			</div>
-		</main>
-	</body>
-	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-	{% load static %}
-	<script src="{% static 'js/app.js' %}"></script>	
-    <script>
-		create_graph("{{ fs_date_hist }}", "{{ fs_stock_values }}", 'line', 'Stock price (€)', 'fs_share_price', x_quote=true, x_apostophe=false, y_quote=true, y_apostophe=false);
-        create_graph("{{ fs_date_dividend }}", "{{ fs_dividend_values }}", 'bar', 'Dividend price (€)', 'fs_dividend_price', x_quote=true, x_apostophe=false, y_quote=true, y_apostophe=false);
-		create_graph("{{ fs_years_date }}", "{{ fs_net_results }}", 'bar', 'Net profit (€)', 'fs_net_profit', x_quote=false, x_apostophe=true, y_quote=false, y_apostophe=false);
-		create_graph("{{ fs_last_table_date }}", "{{ fs_free_cash_flow }}", 'bar', 'Free cash flow (€)', 'fs_free_cash_flow', x_quote=false, x_apostophe=true, y_quote=false, y_apostophe=false);    
-		create_graph("{{ fs_years_date }}", "{{ fs_net_margin }}", 'bar', 'Net margin (€)', 'fs_net_margin', x_quote=false, x_apostophe=true, y_quote=false, y_apostophe=false);    
-		create_graph("{{ fs_last_table_date }}", "{{ fs_yield }}", 'bar', 'Yield (€)', 'fs_yield', x_quote=false, x_apostophe=true, y_quote=false, y_apostophe=false);    
-		create_graph("{{ fs_years_date }}", "{{ fs_operating_result }}", 'bar', 'Operating result (€)', 'fs_operating_result', x_quote=false, x_apostophe=true, y_quote=false, y_apostophe=false);    
-		create_graph("{{ fs_years_date }}", "{{ fs_operating_margin }}", 'bar', 'Operating margin (€)', 'fs_operating_margin', x_quote=false, x_apostophe=true, y_quote=false, y_apostophe=false);    
-		create_graph("{{ fs_last_table_date }}", "{{ fs_roe }}", 'bar', 'Roe (€)', 'fs_roe', x_quote=false, x_apostophe=true, y_quote=false, y_apostophe=false);    
-		create_graph("{{ fs_last_table_date }}", "{{ fs_roa }}", 'bar', 'Roa (€)', 'fs_roa', x_quote=false, x_apostophe=true, y_quote=false, y_apostophe=false);    
+		</div>
+	</main>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+{% load static %}
+<script src="{% static 'js/app.js' %}"></script>
+<script>
+	create_graph("{{ fs_date_hist }}", "{{ fs_stock_values }}", 'line', 'Stock price (€)', 'fs_share_price', x_quote = true, x_apostophe = false, y_quote = true, y_apostophe = false);
+	create_graph("{{ fs_date_dividend }}", "{{ fs_dividend_values }}", 'bar', 'Dividend price (€)', 'fs_dividend_price', x_quote = true, x_apostophe = false, y_quote = true, y_apostophe = false);
+	create_graph("{{ fs_years_date }}", "{{ fs_net_results }}", 'bar', 'Net profit (€)', 'fs_net_profit', x_quote = false, x_apostophe = true, y_quote = false, y_apostophe = false);
+	create_graph("{{ fs_last_table_date }}", "{{ fs_free_cash_flow }}", 'bar', 'Free cash flow (€)', 'fs_free_cash_flow', x_quote = false, x_apostophe = true, y_quote = false, y_apostophe = false);
+	create_graph("{{ fs_years_date }}", "{{ fs_net_margin }}", 'bar', 'Net margin (€)', 'fs_net_margin', x_quote = false, x_apostophe = true, y_quote = false, y_apostophe = false);
+	create_graph("{{ fs_last_table_date }}", "{{ fs_yield }}", 'bar', 'Yield (€)', 'fs_yield', x_quote = false, x_apostophe = true, y_quote = false, y_apostophe = false);
+	create_graph("{{ fs_years_date }}", "{{ fs_operating_result }}", 'bar', 'Operating result (€)', 'fs_operating_result', x_quote = false, x_apostophe = true, y_quote = false, y_apostophe = false);
+	create_graph("{{ fs_years_date }}", "{{ fs_operating_margin }}", 'bar', 'Operating margin (€)', 'fs_operating_margin', x_quote = false, x_apostophe = true, y_quote = false, y_apostophe = false);
+	create_graph("{{ fs_last_table_date }}", "{{ fs_roe }}", 'bar', 'Roe (€)', 'fs_roe', x_quote = false, x_apostophe = true, y_quote = false, y_apostophe = false);
+	create_graph("{{ fs_last_table_date }}", "{{ fs_roa }}", 'bar', 'Roa (€)', 'fs_roa', x_quote = false, x_apostophe = true, y_quote = false, y_apostophe = false);
+	create_graph("{{ fs_years_date }}", "{{ fs_pbr }}", 'bar', 'PBR (€)', 'fs_pbr', x_quote = false, x_apostophe = true, y_quote = false, y_apostophe = false);
 
-		create_graph("{{ ss_date_hist }}", "{{ ss_stock_values }}", 'line', 'Stock price (€)', 'ss_share_price', x_quote=true, x_apostophe=false, y_quote=true, y_apostophe=false);
-        create_graph("{{ ss_date_dividend }}", "{{ ss_dividend_values }}", 'bar', 'Dividend price (€)', 'ss_dividend_price', x_quote=true, x_apostophe=false, y_quote=true, y_apostophe=false);
-		create_graph("{{ ss_years_date }}", "{{ ss_net_results }}", 'bar', 'Net profit (€)', 'ss_net_profit', x_quote=false, x_apostophe=true, y_quote=false, y_apostophe=false);
-		create_graph("{{ ss_last_table_date }}", "{{ ss_free_cash_flow }}", 'bar', 'Free cash flow (€)', 'ss_free_cash_flow', x_quote=false, x_apostophe=true, y_quote=false, y_apostophe=false);    
-		create_graph("{{ ss_years_date }}", "{{ ss_net_margin }}", 'bar', 'Net margin (€)', 'ss_net_margin', x_quote=false, x_apostophe=true, y_quote=false, y_apostophe=false);    
-		create_graph("{{ ss_last_table_date }}", "{{ ss_yield }}", 'bar', 'Yield (€)', 'ss_yield', x_quote=false, x_apostophe=true, y_quote=false, y_apostophe=false);    
-		create_graph("{{ ss_years_date }}", "{{ ss_operating_result }}", 'bar', 'Operating result (€)', 'ss_operating_result', x_quote=false, x_apostophe=true, y_quote=false, y_apostophe=false);    
-		create_graph("{{ ss_years_date }}", "{{ ss_operating_margin }}", 'bar', 'Operating margin (€)', 'ss_operating_margin', x_quote=false, x_apostophe=true, y_quote=false, y_apostophe=false);    
-		create_graph("{{ ss_last_table_date }}", "{{ ss_roe }}", 'bar', 'Roe (€)', 'ss_roe', x_quote=false, x_apostophe=true, y_quote=false, y_apostophe=false);    
-		create_graph("{{ ss_last_table_date }}", "{{ ss_roa }}", 'bar', 'Roa (€)', 'ss_roa', x_quote=false, x_apostophe=true, y_quote=false, y_apostophe=false); 
+	create_graph("{{ ss_date_hist }}", "{{ ss_stock_values }}", 'line', 'Stock price (€)', 'ss_share_price', x_quote = true, x_apostophe = false, y_quote = true, y_apostophe = false);
+	create_graph("{{ ss_date_dividend }}", "{{ ss_dividend_values }}", 'bar', 'Dividend price (€)', 'ss_dividend_price', x_quote = true, x_apostophe = false, y_quote = true, y_apostophe = false);
+	create_graph("{{ ss_years_date }}", "{{ ss_net_results }}", 'bar', 'Net profit (€)', 'ss_net_profit', x_quote = false, x_apostophe = true, y_quote = false, y_apostophe = false);
+	create_graph("{{ ss_last_table_date }}", "{{ ss_free_cash_flow }}", 'bar', 'Free cash flow (€)', 'ss_free_cash_flow', x_quote = false, x_apostophe = true, y_quote = false, y_apostophe = false);
+	create_graph("{{ ss_years_date }}", "{{ ss_net_margin }}", 'bar', 'Net margin (€)', 'ss_net_margin', x_quote = false, x_apostophe = true, y_quote = false, y_apostophe = false);
+	create_graph("{{ ss_last_table_date }}", "{{ ss_yield }}", 'bar', 'Yield (€)', 'ss_yield', x_quote = false, x_apostophe = true, y_quote = false, y_apostophe = false);
+	create_graph("{{ ss_years_date }}", "{{ ss_operating_result }}", 'bar', 'Operating result (€)', 'ss_operating_result', x_quote = false, x_apostophe = true, y_quote = false, y_apostophe = false);
+	create_graph("{{ ss_years_date }}", "{{ ss_operating_margin }}", 'bar', 'Operating margin (€)', 'ss_operating_margin', x_quote = false, x_apostophe = true, y_quote = false, y_apostophe = false);
+	create_graph("{{ ss_last_table_date }}", "{{ ss_roe }}", 'bar', 'Roe (€)', 'ss_roe', x_quote = false, x_apostophe = true, y_quote = false, y_apostophe = false);
+	create_graph("{{ ss_last_table_date }}", "{{ ss_roa }}", 'bar', 'Roa (€)', 'ss_roa', x_quote = false, x_apostophe = true, y_quote = false, y_apostophe = false);
+	create_graph("{{ ss_years_date }}", "{{ ss_pbr }}", 'bar', 'PBR (€)', 'ss_pbr', x_quote = false, x_apostophe = true, y_quote = false, y_apostophe = false);
 
-		create_graph("{{ fs_years_date }}", "{{ fs_per }}", 'bar', 'Per (€)', 'fs_per', x_quote=false, x_apostophe=true, y_quote=false, y_apostophe=false);
-		create_graph("{{ fs_second_table_date }}", "{{ fs_bna }}", 'bar', 'BNA (€)', 'fs_bna', x_quote=false, x_apostophe=true, y_quote=false, y_apostophe=false);    
-		create_graph("{{ fs_last_table_date }}", "{{ fs_bvps }}", 'bar', 'BVPS (€)', 'fs_bvps', x_quote=false, x_apostophe=true, y_quote=false, y_apostophe=false);    
-		create_graph("{{ fs_last_table_date }}", "{{ fs_capex }}", 'bar', 'Capex (€)', 'fs_capex', x_quote=false, x_apostophe=true, y_quote=false, y_apostophe=false);    
-		create_graph("{{ fs_years_date }}", "{{ fs_turnover }}", 'bar', 'Turnover (€)', 'fs_turnover', x_quote=false, x_apostophe=true, y_quote=false, y_apostophe=false);    
-		create_graph("{{ fs_years_date }}", "{{ fs_capitalization }}", 'bar', 'Capitalization (€)', 'fs_cap', x_quote=false, x_apostophe=true, y_quote=false, y_apostophe=false);    
-		create_graph("{{ fs_last_table_date }}", "{{ fs_debt }}", 'bar', 'Debt (€)', 'fs_debt', x_quote=false, x_apostophe=true, y_quote=false, y_apostophe=false);    
-		create_graph("{{ fs_last_table_date }}", "{{ fs_equity }}", 'bar', 'Equity (€)', 'fs_equity', x_quote=false, x_apostophe=true, y_quote=false, y_apostophe=false);    
+	create_graph("{{ fs_years_date }}", "{{ fs_per }}", 'bar', 'Per (€)', 'fs_per', x_quote = false, x_apostophe = true, y_quote = false, y_apostophe = false);
+	create_graph("{{ fs_second_table_date }}", "{{ fs_bna }}", 'bar', 'BNA (€)', 'fs_bna', x_quote = false, x_apostophe = true, y_quote = false, y_apostophe = false);
+	create_graph("{{ fs_last_table_date }}", "{{ fs_bvps }}", 'bar', 'BVPS (€)', 'fs_bvps', x_quote = false, x_apostophe = true, y_quote = false, y_apostophe = false);
+	create_graph("{{ fs_last_table_date }}", "{{ fs_capex }}", 'bar', 'Capex (€)', 'fs_capex', x_quote = false, x_apostophe = true, y_quote = false, y_apostophe = false);
+	create_graph("{{ fs_years_date }}", "{{ fs_turnover }}", 'bar', 'Turnover (€)', 'fs_turnover', x_quote = false, x_apostophe = true, y_quote = false, y_apostophe = false);
+	create_graph("{{ fs_years_date }}", "{{ fs_capitalization }}", 'bar', 'Capitalization (€)', 'fs_cap', x_quote = false, x_apostophe = true, y_quote = false, y_apostophe = false);
+	create_graph("{{ fs_last_table_date }}", "{{ fs_debt }}", 'bar', 'Debt (€)', 'fs_debt', x_quote = false, x_apostophe = true, y_quote = false, y_apostophe = false);
+	create_graph("{{ fs_last_table_date }}", "{{ fs_equity }}", 'bar', 'Equity (€)', 'fs_equity', x_quote = false, x_apostophe = true, y_quote = false, y_apostophe = false);
+	create_graph("{{ fs_last_table_date }}", "{{ fs_leverage }}", 'bar', 'Leverage (€)', 'fs_leverage', x_quote = false, x_apostophe = true, y_quote = false, y_apostophe = false);
+	create_graph("{{ fs_last_table_date }}", "{{ fs_treasury }}", 'bar', 'Treasury (€)', 'fs_treasury', x_quote = false, x_apostophe = true, y_quote = false, y_apostophe = false);
 
-		create_graph("{{ ss_years_date }}", "{{ ss_per }}", 'bar', 'Per (€)', 'ss_per', x_quote=false, x_apostophe=true, y_quote=false, y_apostophe=false);
-		create_graph("{{ ss_second_table_date }}", "{{ ss_bna }}", 'bar', 'BNA (€)', 'ss_bna', x_quote=false, x_apostophe=true, y_quote=false, y_apostophe=false);    
-		create_graph("{{ ss_last_table_date }}", "{{ ss_bvps }}", 'bar', 'BVPS (€)', 'ss_bvps', x_quote=false, x_apostophe=true, y_quote=false, y_apostophe=false);    
-		create_graph("{{ ss_last_table_date }}", "{{ ss_capex }}", 'bar', 'Capex (€)', 'ss_capex', x_quote=false, x_apostophe=true, y_quote=false, y_apostophe=false);    
-		create_graph("{{ ss_years_date }}", "{{ ss_turnover }}", 'bar', 'Turnover (€)', 'ss_turnover', x_quote=false, x_apostophe=true, y_quote=false, y_apostophe=false);    
-		create_graph("{{ ss_years_date }}", "{{ ss_capitalization }}", 'bar', 'Capitalization (€)', 'ss_cap', x_quote=false, x_apostophe=true, y_quote=false, y_apostophe=false);    
-		create_graph("{{ ss_last_table_date }}", "{{ ss_debt }}", 'bar', 'Debt (€)', 'ss_debt', x_quote=false, x_apostophe=true, y_quote=false, y_apostophe=false);    
-		create_graph("{{ ss_last_table_date }}", "{{ ss_equity }}", 'bar', 'Equity (€)', 'ss_equity', x_quote=false, x_apostophe=true, y_quote=false, y_apostophe=false);    
+	create_graph("{{ ss_years_date }}", "{{ ss_per }}", 'bar', 'Per (€)', 'ss_per', x_quote = false, x_apostophe = true, y_quote = false, y_apostophe = false);
+	create_graph("{{ ss_second_table_date }}", "{{ ss_bna }}", 'bar', 'BNA (€)', 'ss_bna', x_quote = false, x_apostophe = true, y_quote = false, y_apostophe = false);
+	create_graph("{{ ss_last_table_date }}", "{{ ss_bvps }}", 'bar', 'BVPS (€)', 'ss_bvps', x_quote = false, x_apostophe = true, y_quote = false, y_apostophe = false);
+	create_graph("{{ ss_last_table_date }}", "{{ ss_capex }}", 'bar', 'Capex (€)', 'ss_capex', x_quote = false, x_apostophe = true, y_quote = false, y_apostophe = false);
+	create_graph("{{ ss_years_date }}", "{{ ss_turnover }}", 'bar', 'Turnover (€)', 'ss_turnover', x_quote = false, x_apostophe = true, y_quote = false, y_apostophe = false);
+	create_graph("{{ ss_years_date }}", "{{ ss_capitalization }}", 'bar', 'Capitalization (€)', 'ss_cap', x_quote = false, x_apostophe = true, y_quote = false, y_apostophe = false);
+	create_graph("{{ ss_last_table_date }}", "{{ ss_debt }}", 'bar', 'Debt (€)', 'ss_debt', x_quote = false, x_apostophe = true, y_quote = false, y_apostophe = false);
+	create_graph("{{ ss_last_table_date }}", "{{ ss_equity }}", 'bar', 'Equity (€)', 'ss_equity', x_quote = false, x_apostophe = true, y_quote = false, y_apostophe = false);
+	create_graph("{{ ss_last_table_date }}", "{{ ss_leverage }}", 'bar', 'Leverage (€)', 'ss_leverage', x_quote = false, x_apostophe = true, y_quote = false, y_apostophe = false);
+	create_graph("{{ ss_last_table_date }}", "{{ ss_treasury }}", 'bar', 'Treasury (€)', 'ss_treasury', x_quote = false, x_apostophe = true, y_quote = false, y_apostophe = false);
 
-		create_graph("{{ fs_mean_per_dates }}", "{{ fs_mean_per }}", 'bar', 'Mean per of sector (€)', 'fs_per_mean', x_quote=false, x_apostophe=true, y_quote=false, y_apostophe=false);
-	</script>
+	create_graph("{{ fs_years }}", "{{ fs_mean_per }}", 'bar', 'Mean PER of sector (€)', 'fs_per_mean', x_quote = false, x_apostophe = true, y_quote = false, y_apostophe = false);
+	create_graph("{{ ss_years }}", "{{ ss_mean_per }}", 'bar', 'Mean PER of sector (€)', 'ss_per_mean', x_quote = false, x_apostophe = true, y_quote = false, y_apostophe = false);
+
+	create_graph("{{ fs_years }}", "{{ fs_mean_roe }}", 'bar', 'Mean ROE of sector (€)', 'fs_roe_mean', x_quote = false, x_apostophe = true, y_quote = false, y_apostophe = false);
+	create_graph("{{ ss_years }}", "{{ ss_mean_roe }}", 'bar', 'Mean ROE of sector (€)', 'ss_roe_mean', x_quote = false, x_apostophe = true, y_quote = false, y_apostophe = false);
+
+	create_graph("{{ fs_years }}", "{{ fs_mean_roa }}", 'bar', 'Mean ROA of sector (€)', 'fs_roa_mean', x_quote = false, x_apostophe = true, y_quote = false, y_apostophe = false);
+	create_graph("{{ ss_years }}", "{{ ss_mean_roa }}", 'bar', 'Mean ROA of sector (€)', 'ss_roa_mean', x_quote = false, x_apostophe = true, y_quote = false, y_apostophe = false);
+
+</script>
+
 </html>

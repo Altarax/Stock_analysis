@@ -8,6 +8,9 @@
     --font: "Plus Jakarta Sans", "Arial";
 
     --contentMargin: 30px;
+
+    --dotColor: rgb(124, 92, 252);
+
 }
 
 h1,
@@ -63,7 +66,7 @@ body {
 }
 
 .navbar a.active {
-    background-color: rgb(124, 92, 252);;
+    background-color: var(--dotColor);
     color: white;
 }
 
@@ -87,8 +90,8 @@ body {
 }
 
 .container {
-    padding: 60px;
-    padding-top: 50px;
+    margin: 60px;
+    margin-top: 0px;
 
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -273,13 +276,20 @@ label {
 
 .basic_information {
     width: 100%;
-    display: inline-block;
+    display: flex;
+    flex-direction: row;
+    font-family: var(--font);
 }
+
+.basic_information>div {
+    width: 50%;
+    text-align: center;
+}
+
 
 .share_name {
     width: 50%;
     float: left;
-    margin-left: 3vw;
 }
 
 .actual_stock_price {
@@ -307,4 +317,61 @@ label {
 .information_3>* {
     width: 50%;
     height: 29%;
+}
+
+.information_4 {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    height: 100%;
+}
+
+.information_4>* {
+    width: 50%;
+    height: 100%;
+}
+
+.data {
+    text-align: center;
+}
+
+.sector_data {
+    text-align: center;
+}
+
+.definitions {
+    display: flex;
+    flex-direction: row;
+    height: calc(var(--dotSize)/1.5);
+    color: white;
+    font-family: var(--font);
+    font-weight: 700;
+    font-size: 16px;
+    margin: 50px 0 10px 0;
+}
+
+.definitions>div {
+    display: flex;
+    justify-content: center;
+    flex: 1;
+}
+
+.definitions>div>div {
+    width: calc(var(--dotSize)/1.5);
+    background-color: var(--dotColor);
+    border-radius: calc(var(--dotSize)/3);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    text-align: center;
+    margin-right: 10px;
+}
+
+.definitions>div>span {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    text-align: center;
 }

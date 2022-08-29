@@ -1,5 +1,5 @@
 body {
-    background: url("/static/images/back.jpg") no-repeat center center fixed; 
+    background: url("/static/images/back.jpg") no-repeat center center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -75,7 +75,6 @@ form {
     color: white;
     font-style: 1.2em;
     position: relative;
-    z-index: 1;
     cursor: pointer;
     background: none;
     text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.45);
@@ -167,7 +166,7 @@ div {
             #07b39b,
             #6fba82);
     width: 90%;
-    max-width: 500px;
+    max-width: 600px;
     padding: 2em;
     margin: 1.5em auto;
     border: 3px solid rgba(0, 0, 0, 0.08);

@@ -1,32 +1,34 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <title>Stock Analysis</title>
 
 </head>
+
 <body>
 
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'css/index.css' %}">
 
     <div class="one">
-        <h1>Choose the two companies:</h1>
+        <h1>Choose the two companies you want to compare and visualize:</h1>
     </div>
 
     <form method="POST" action="{% url 'visualize-data' %}">
         {% csrf_token %}
 
         <select class="minimal" id="stocks" name="first-stock">
-        {% for stock in STOCK_LIST %}
+            {% for stock in STOCK_LIST %}
             <option value="{{ stock }}">{{ stock }}</option>
-        {% endfor %}
+            {% endfor %}
         </select>
 
         <select class="minimal" id="stocks-2" name="second-stock">
-        {% for stock in STOCK_LIST %}
+            {% for stock in STOCK_LIST %}
             <option value="{{ stock }}">{{ stock }}</option>
-        {% endfor %}
+            {% endfor %}
         </select>
 
         <br><br>
@@ -34,4 +36,5 @@
     </form>
 
 </body>
+
 </html>

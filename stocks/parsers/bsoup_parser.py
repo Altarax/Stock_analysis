@@ -58,6 +58,7 @@ def parser_get_financials_url(isin):
         temp = str(line).split('"')
         for j in temp:
             if "/cours" in j:
+                print(j)
                 return "https://www.zonebourse.com" + j + "fondamentaux/"
 
 
@@ -526,3 +527,89 @@ def calculate_own_indicators():
         my_own_indicators["PER Evaluation"] = "Overestimated"
 
     return my_own_indicators
+
+
+def get_base_url(isin):
+    stock_page = requests.get(
+        f"https://www.zonebourse.com/recherche/instruments?q={str(isin)}"
+    )
+    soup = bs(stock_page.content, "html.parser")
+    stock_list = soup.find_all("td", {"class": "table-child--left"})
+
+    t = [i.find("a") for i in stock_list]
+    for line in t:
+        temp = str(line).split('"')
+        for j in temp:
+            if "/cours" in j:
+                return "https://www.zonebourse.com" + j
+
+
+def parser_get_last_news(isin):
+    url = get_base_url(isin)
+    base_url = requests.get(url)
+    soup = bs(base_url.content, "html.parser")
+
+    news = {}
+    dates = []
+    table_list = soup.find_all("td", {"class": "pleft5 pright5 large30"})
+
+    try:
+        for i in range(8):
+            dates.append(table_list[i].text)
+    except:
+        pass
+
+    if not (dates):
+        try:
+            for i in range(5):
+                dates.append(table_list[i].text)
+        except:
+            pass
+
+    if not (dates):
+        try:
+            for i in range(3):
+                dates.append(table_list[i].text)
+        except:
+            dates = 0
+
+    table_list = soup.find_all("td", {"class": "newsColCT ptop3 pbottom3 pleft5"})
+    if dates != 0:
+        for i in range(len(dates)):
+            news.update(
+                {
+                    str(
+                        "https://www.zonebourse.com"
+                        + table_list[i].find("a").get("href")
+                    ): [dates[i], table_list[i].find("a").text]
+                }
+            )
+    else:
+        news.update({"No News": "Available"})
+
+    return news
+
+
+def parser_get_majoritary_shareholders(isin):
+    url = get_base_url(isin) + "societe/"
+    base_url = requests.get(url)
+    soup = bs(base_url.content, "html.parser")
+
+    data = []
+
+    count = 0
+    try:
+        table_list = soup.find_all("td", {"class": "std_txt th_inner center"})
+        rows = table_list[5].find_all("tr")
+        for row in rows:
+            cols = row.find_all("td")
+            cols = [ele.text.strip() for ele in cols]
+            if count < 10:
+                data.append([ele for ele in cols if ele])  # Get rid of empty values
+                count += 1
+
+        data.remove(["Nom", "Actions", "%"])
+    except:
+        data = "None"
+
+    return data

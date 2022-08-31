@@ -16,7 +16,6 @@
 			{% load static %}
 			<img class="logo" src="{% static 'images/logo.png' %}" />
 			{% block nav-home %}<a href="{% url 'home' %}">Home</a>{% endblock %}
-			{% block nav-news %}<a href="{% url 'last-news' %}">Last news</a>{% endblock %}
 		</div>
 	</header>
 	<main>
@@ -50,11 +49,28 @@
 				<div class="content">
 					<div class="basic_information">
 						<div class="share_name">
-							Share: {{ fs_name }}
+							<b>Share:</b> {{ fs_name }}
 						</div>
 						<div class="share_sector">
-							Sector: {{ fs_sector }}
+							<b>Sector:</b> {{ fs_sector }}
 						</div>
+					</div>
+					<div class="last_news">
+						<label>Latest news:</label>
+						{% for key, value in fs_news.items %} 
+							<a href="{{ key }}"><b>{{ value.0 }}</b> : {{ value.1 }} </a>
+							<br>
+						{% endfor %}
+					</div>
+					<div class="majority_shareholders">
+						<label>Majority Shareholders:</label>
+						{% for mh in fs_mh %}
+						<div>
+							<div>{{ mh.0 }}</div>
+							<div>{{ mh.1 }}</div>
+							<div>{{ mh.2 }}</div>
+						</div>
+						{% endfor %}
 					</div>
 				</div>
 			</div>
@@ -105,11 +121,28 @@
 				<div class="content">
 					<div class="basic_information">
 						<div class="share_name">
-							Share: {{ ss_name }}
+							<b>Share:</b> {{ ss_name }}
 						</div>
 						<div class="actual_stock_price">
-							Sector: {{ fs_sector }}
+							<b>Sector:</b> {{ fs_sector }}
 						</div>
+					</div>
+					<div class="last_news">
+						<label>Latest news:</label>
+						{% for key, value in ss_news.items %} 
+							<a href="{{ key }}"><b>{{ value.0 }}</b> : {{ value.1 }} </a>
+							<br>
+						{% endfor %}
+					</div>
+					<div class="majority_shareholders">
+						<label>Majority Shareholders:</label>
+						{% for mh in ss_mh %}
+						<div>
+							<div>{{ mh.0 }}</div>
+							<div>{{ mh.1 }}</div>
+							<div>{{ mh.2 }}</div>
+						</div>
+						{% endfor %}
 					</div>
 				</div>
 			</div>

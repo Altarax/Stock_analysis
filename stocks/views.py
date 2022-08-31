@@ -38,9 +38,15 @@ def visualize_data(request):
     fs_mean_roa = get_roa_mean(first_stock.sector)
     ss_mean_roa = get_roa_mean(second_stock.sector)
 
-    print()
+    fs_news = first_stock.get_last_news(str(first_stock.isin))
+    fs_mh = first_stock.get_majority_shareholders(str(first_stock.isin))
+
+    ss_news = second_stock.get_last_news(str(second_stock.isin))
+    ss_mh = second_stock.get_majority_shareholders(str(second_stock.isin))
 
     context = {
+        "fs_mh": fs_mh,
+        "fs_news": fs_news,
         "fs_mean_roa": fs_mean_roa,
         "fs_mean_roe": fs_mean_roe,
         "fs_mean_per": fs_mean_per,
@@ -75,6 +81,8 @@ def visualize_data(request):
         "fs_last_table_date": first_stock.last_table_date,
         "fs_second_table_date": first_stock.second_table_date,
         "fs_years_date": first_stock.years_date,
+        "ss_mh": ss_mh,
+        "ss_news": ss_news,
         "ss_mean_roe": ss_mean_roe,
         "ss_mean_roa": ss_mean_roa,
         "ss_mean_per": ss_mean_per,
@@ -124,8 +132,6 @@ def visualize_news(request):
 @details    The functions below couldn't be added in utils.py because
             they are using Django.
 """
-
-
 def get_per_mean(sector):
     all_entries = Stock.objects.filter(sector__exact=sector)
     jsonDec = json.decoder.JSONDecoder()
@@ -391,3 +397,4 @@ def get_roa_mean(sector):
         mean(roa_2025),
     ]
     return mean_values
+    

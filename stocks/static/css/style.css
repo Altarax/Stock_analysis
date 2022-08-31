@@ -11,6 +11,9 @@
 
     --dotColor: rgb(124, 92, 252);
 
+    --horizontalMargin: 10px;
+    --verticalMargin: 20px;
+
 }
 
 h1,
@@ -374,4 +377,110 @@ label {
     justify-content: center;
     align-content: center;
     text-align: center;
+}
+
+.last_news {
+    margin-top: 5%;
+    display: flex;
+    flex-direction: column;
+    height: 330.16px;
+}
+
+.last_news>label {
+    margin-bottom: 3%;
+    align-self: center;
+    font-weight: bold;
+}
+
+.last_news>a {
+    font-family: var(--font);
+    transition: all 0.25s linear;
+    position: relative;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.last_news>a:before {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 3px;
+    background-color: var(--dotColor);
+    position: absolute;
+    left: 0;
+    bottom: -3px;
+    transform-origin: left;
+    transform: scale(0);
+    transition: 0.25s linear;
+}
+
+.last_news>a:hover:before {
+    transform: scale(1);
+}
+
+.last_news>a:link {
+    text-decoration: none;
+    color: black
+}
+
+.last_news>a:visited {
+    text-decoration: none;
+    color: black
+}
+
+.last_news>a:hover {
+    text-decoration: none;
+    color: black
+}
+
+.last_news>a:active {
+    text-decoration: none;
+    color: black
+}
+
+.majority_shareholders {
+    margin-top: 5%;
+    display: flex;
+    flex-direction: column;
+    font-family: var(--font);
+    overflow-y: scroll;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+.majority_shareholders::-webkit-scrollbar {
+    display: none;
+}
+
+.majority_shareholders>label {
+    margin-bottom: 2%;
+    align-self: center;
+    font-weight: bold;
+}
+
+.majority_shareholders>div {
+    display: flex;
+    flex-direction: row;
+}
+
+.majority_shareholders>div>div {
+    flex: 1;
+}
+
+.majority_shareholders>div>div:not(:last-child) {
+    margin-right: calc(var(--horizontalMargin) / 2);
+}
+
+.majority_shareholders>div:not(:first-child) {
+    padding-top: calc(var(--verticalMargin) / 2);
+}
+
+.majority_shareholders>div:not(:last-child) {
+    padding-bottom: calc(var(--verticalMargin) / 2);
+    border-bottom: 1px solid;
+}
+
+.majority_shareholders > div > div:first-child {
+    flex: 3;
+    font-weight: bold;
 }

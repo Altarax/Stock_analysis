@@ -276,6 +276,12 @@ class Stock(models.Model):
         self.get_floating_stock()
         self.get_pbr()
 
+    def get_last_news(self, isin):
+        return parser_get_last_news(isin)
+
+    def get_majority_shareholders(self, isin):
+        return parser_get_majoritary_shareholders(isin)
+
     def decode_stock_values(self):
         jsonDec = json.decoder.JSONDecoder()
         return jsonDec.decode(self.stock_values)

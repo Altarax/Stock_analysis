@@ -34,6 +34,7 @@ class Stock(models.Model):
     capex_values = models.TextField(null=True)
     yield_values = models.TextField(null=True)
     equity_values = models.TextField(null=True)
+    own_evaluation = models.TextField(null=True)
     dividend_values = models.TextField(null=True)
     leverage_values = models.TextField(null=True)
     treasury_values = models.TextField(null=True)
@@ -250,6 +251,22 @@ class Stock(models.Model):
         self.pbr_values = temp
         super().save()
 
+    def get_evaluation(self):
+        jsonDec = json.decoder.JSONDecoder()
+        try:
+            yield_val = jsonDec.decode(self.yield_values)
+        except:
+            yield_val = 0
+
+        try:
+            per_values = jsonDec.decode(self.per_values)
+        except:
+            per_values = 0
+
+        temp = parser_calculate_own_evaluations(yield_val, per_values)
+        self.own_evaluation = temp
+        super().save()
+
     def get_all_financials_data(self):
         self.get_dates()
         self.get_sector()
@@ -275,6 +292,7 @@ class Stock(models.Model):
         self.get_leverage()
         self.get_floating_stock()
         self.get_pbr()
+        self.get_evaluation()
 
     def get_last_news(self, isin):
         return parser_get_last_news(isin)

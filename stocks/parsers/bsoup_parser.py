@@ -505,26 +505,32 @@ def parser_get_pbr():
     return bpr_values
 
 
-def calculate_own_indicators():
+def parser_calculate_own_evaluations(yield_val, per_val):
     my_own_indicators = {}
 
-    mean_yield = mean(yield_values_global[0:5])
-    actual_yield = yield_values_global[-1]
-    yield_result = actual_yield * 100 / mean_yield - 100
-    my_own_indicators["Yield Evolution"] = f"{yield_result}%"
-    if actual_yield > mean_yield:
-        my_own_indicators["Yield Evaluation"] = "Underestimated"
-    else:
-        my_own_indicators["Yield Evaluation"] = "Overestimated"
+    try:
+        mean_yield = mean(yield_val[0:5])
+        actual_yield = yield_val[-1]
+        yield_result = actual_yield * 100 / mean_yield - 100
+        my_own_indicators["Yield Evolution"] = format(yield_result, '.2f')+"%"
+        if actual_yield > mean_yield:
+            my_own_indicators["Yield Evaluation"] = "Underestimated"
+        else:
+            my_own_indicators["Yield Evaluation"] = "Overestimated"
+    except:
+        my_own_indicators["Yield Evaluation"] = "Can't be calculated"
 
-    mean_per = mean(per_values_global[0:5])
-    actual_per = per_values_global[-1]
-    per_result = actual_per * 100 / mean_per - 100
-    my_own_indicators["PER Evolution"] = f"{per_result}%"
-    if actual_per < mean_per:
-        my_own_indicators["PER Evaluation"] = "Underestimated"
-    else:
-        my_own_indicators["PER Evaluation"] = "Overestimated"
+    try:
+        mean_per = mean(per_val[0:5])
+        actual_per = per_val[-1]
+        per_result = actual_per * 100 / mean_per - 100
+        my_own_indicators["PER Evolution"] = format(per_result, '.2f')+"%"
+        if actual_per < mean_per:
+            my_own_indicators["PER Evaluation"] = "Underestimated"
+        else:
+            my_own_indicators["PER Evaluation"] = "Overestimated"
+    except:
+        my_own_indicators["PER Evaluation"] = "Can't be calculated"
 
     return my_own_indicators
 
@@ -613,3 +619,5 @@ def parser_get_majoritary_shareholders(isin):
         data = "None"
 
     return data
+
+

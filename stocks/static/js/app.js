@@ -1,3 +1,7 @@
+var jQueryScript = document.createElement('script');  
+jQueryScript.setAttribute('src','https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0');
+document.head.appendChild(jQueryScript);
+
 function create_graph(key, value, chart_type, label, id, x_quote = false, x_apostrophe = false, y_quote = false, y_apostrophe = false) {
     temp = key;
     if (x_quote) {
@@ -9,14 +13,11 @@ function create_graph(key, value, chart_type, label, id, x_quote = false, x_apos
     }
 
     temp = value;
-    console.log(temp);
     if (y_quote) {
         y_Values = JSON.parse(temp.replace(/&quot;/g, '"'));
     } else if (y_apostrophe) {
         y_Values = JSON.parse(temp.replace(/&#x27;/g, '"'));
     } else {
-        console.log(temp)
-        console.log(temp.length)
         if (temp.length === 0) {
             y_Values = new Array(x_Values.length).fill(0)
         } else {
@@ -37,9 +38,33 @@ function create_graph(key, value, chart_type, label, id, x_quote = false, x_apos
         }
     }
 
+    params = null;
+    if (chart_type == "bar") {
+        params = {
+            datalabels: {
+                color: '#ffffff',
+                anchor: 'center',
+                align: 'center',
+                formatter: function(value) {               
+                    return (Math.round(value*100)/100).toFixed(1);
+                },
+                font: {
+                    weight: 'bold'
+                }
+            }
+        };
+    } else {
+        params = {
+            datalabels: {
+                color: '',
+            }
+        };
+    }
+
     const ctx = document.getElementById(id).getContext('2d');
     const chart = new Chart(ctx, {
         type: chart_type,
+        plugins: [ChartDataLabels],
         data: {
             labels: x_Values,
             datasets: [{
@@ -54,6 +79,7 @@ function create_graph(key, value, chart_type, label, id, x_quote = false, x_apos
             spanGaps: true,
             animation: false,
             pointRadius: 0,
+            plugins: params
         }
     });
 }

@@ -93,7 +93,7 @@ body {
 }
 
 .container {
-    margin: 60px;
+    margin: 30px;
     margin-top: 0px;
 
     display: grid;
@@ -106,7 +106,8 @@ body {
         "b e"
         "c f"
         "g h"
-        "i j";
+        "i j"
+        "k l";
 }
 
 .container>div:not(.select) {
@@ -163,6 +164,14 @@ body {
     grid-area: j;
 }
 
+.container>div:nth-child(11) {
+    grid-area: k;
+}
+
+.container>div:nth-child(12) {
+    grid-area: l;
+}
+
 .container>.select:nth-child(1) {
     grid-area: z;
 }
@@ -199,6 +208,13 @@ body {
     content: "5";
 }
 
+.container>div:nth-child(11)>.dot::after {
+    content: "6";
+}
+
+.container>div:nth-child(12)>.dot::after {
+    content: "6";
+}
 
 .dot {
     position: relative;
@@ -334,6 +350,17 @@ label {
     height: 100%;
 }
 
+.information_5 {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.information_5>* {
+    width: 50%;
+    height: 29%;
+}
+
 .data {
     text-align: center;
 }
@@ -444,8 +471,10 @@ label {
     flex-direction: column;
     font-family: var(--font);
     overflow-y: scroll;
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
 }
 
 .majority_shareholders::-webkit-scrollbar {
@@ -480,7 +509,7 @@ label {
     border-bottom: 1px solid;
 }
 
-.majority_shareholders > div > div:first-child {
+.majority_shareholders>div>div:first-child {
     flex: 3;
     font-weight: bold;
 }

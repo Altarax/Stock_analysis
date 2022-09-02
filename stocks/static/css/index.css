@@ -1,5 +1,5 @@
 body {
-    background: url("/static/images/back.jpg") no-repeat center center fixed;
+    background-color: grey;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;

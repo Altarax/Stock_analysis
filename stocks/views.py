@@ -2,7 +2,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from stocks.utils import *
 from stocks.models import *
-import os
+import os, json
 
 
 def index(request):
@@ -45,6 +45,7 @@ def visualize_data(request):
     ss_mh = second_stock.get_majority_shareholders(str(second_stock.isin))
 
     context = {
+        "fs_own_evaluation":ast.literal_eval(first_stock.own_evaluation),
         "fs_mh": fs_mh,
         "fs_news": fs_news,
         "fs_mean_roa": fs_mean_roa,
@@ -81,6 +82,8 @@ def visualize_data(request):
         "fs_last_table_date": first_stock.last_table_date,
         "fs_second_table_date": first_stock.second_table_date,
         "fs_years_date": first_stock.years_date,
+
+        "ss_own_evaluation":ast.literal_eval(second_stock.own_evaluation),
         "ss_mh": ss_mh,
         "ss_news": ss_news,
         "ss_mean_roe": ss_mean_roe,

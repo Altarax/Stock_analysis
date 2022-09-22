@@ -512,25 +512,25 @@ def parser_calculate_own_evaluations(yield_val, per_val):
         mean_yield = mean(yield_val[0:5])
         actual_yield = yield_val[-1]
         yield_result = actual_yield * 100 / mean_yield - 100
-        my_own_indicators["Yield Evolution"] = format(yield_result, '.2f')+"%"
+        my_own_indicators["Yield_Evolution"] = format(yield_result, '.2f')+"%"
         if actual_yield > mean_yield:
-            my_own_indicators["Yield Evaluation"] = "Underestimated"
+            my_own_indicators["Yield_Evaluation"] = "Underestimated"
         else:
-            my_own_indicators["Yield Evaluation"] = "Overestimated"
+            my_own_indicators["Yield_Evaluation"] = "Overestimated"
     except:
-        my_own_indicators["Yield Evaluation"] = "Can't be calculated"
+        my_own_indicators["Yield_Evaluation"] = "Can't be calculated"
 
     try:
         mean_per = mean(per_val[0:5])
         actual_per = per_val[-1]
         per_result = actual_per * 100 / mean_per - 100
-        my_own_indicators["PER Evolution"] = format(per_result, '.2f')+"%"
+        my_own_indicators["PER_Evolution"] = format(per_result, '.2f')+"%"
         if actual_per < mean_per:
-            my_own_indicators["PER Evaluation"] = "Underestimated"
+            my_own_indicators["PER_Evaluation"] = "Underestimated"
         else:
-            my_own_indicators["PER Evaluation"] = "Overestimated"
+            my_own_indicators["PER_Evaluation"] = "Overestimated"
     except:
-        my_own_indicators["PER Evaluation"] = "Can't be calculated"
+        my_own_indicators["PER_Evaluation"] = "Can't be calculated"
 
     return my_own_indicators
 

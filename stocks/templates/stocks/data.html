@@ -337,6 +337,10 @@
 				<div class="content">
 					<div class="information_5">
 						<div class="calculated_evaluations">
+							{% for key, value in fs_own_evaluation.items %}
+							<div>{{ key }} : {{ value }}</div>
+							<br>
+							{% endfor %}
 						</div>
 					</div>
 				</div>
@@ -346,6 +350,10 @@
 				<div class="content">
 					<div class="information_5">
 						<div class="calculated_evaluations">
+							{% for key, value in ss_own_evaluation.items %}
+							<div>{{ key }} : {{ value }}</div>
+							<br>
+							{% endfor %}
 						</div>
 					</div>
 				</div>

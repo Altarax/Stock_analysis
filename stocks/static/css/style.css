@@ -359,6 +359,9 @@ label {
 .information_5>* {
     width: 50%;
     height: 29%;
+    font-family: var(--font);
+    font-weight: 700;
+    font-size: 16px;
 }
 
 .data {
@@ -513,3 +516,4 @@ label {
     flex: 3;
     font-weight: bold;
 }
+

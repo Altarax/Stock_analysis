@@ -26,3 +26,7 @@ So, try it online but if you want to test it at home and you don't find how to d
 ## Can we have the database ?
 Yes, ask me and I'll send it to you : dangremontjayson.pro@gmail.com  
 I can't give it here because it's too big.
+
+## Example
+Here is what the site looks like :
+![alt text](http://url/to/img.png)

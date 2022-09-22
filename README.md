@@ -30,4 +30,6 @@ I can't give it here because it's too big.
 ## Example
 Here is what the site looks like :
 ![Home page](https://github.com/Altarax/Stock_analysis/blob/main/images/home_page.PNG)
-![Home page](https://github.com/Altarax/Stock_analysis/blob/main/images/data_viz.PNG)
+![data](https://github.com/Altarax/Stock_analysis/blob/main/images/data_viz.PNG)
+![data](https://github.com/Altarax/Stock_analysis/blob/main/images/data_viz_2.PNG)
+![data](https://github.com/Altarax/Stock_analysis/blob/main/images/data_viz_3.PNG)
